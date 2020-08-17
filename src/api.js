@@ -11,6 +11,18 @@ function getCountry(country) {
     .then((response) => response.json())
 }
 
+
+function getAllCountriesName() {
+  return fetch(path, headers)
+    .then((response) => response.json())
+    .then((data) => {
+      const countryNames = []
+      data.filter(i => countryNames.push(i.country))
+      return countryNames;
+    })
+}
+
 export default {
-  getCountry
+  getCountry,
+  getAllCountriesName
 }
