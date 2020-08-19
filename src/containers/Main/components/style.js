@@ -26,3 +26,8 @@ export const ItemStyled = styled.div`
   justify-content: space-between;
   min-width: 150px;
 `
+
+export const Divider = styled.div`
+  margin: 0 20px;
+  border: 1px dashed gray;
+`

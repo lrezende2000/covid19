@@ -5,9 +5,10 @@ import Api from '../../../api';
 
 const navigatorHasShare = navigator.share
 
-function Panel({ updateAt, onChange, data, country }) {
+function Panel({ updateAt, onChange, onChangeCompare, data, country, country2, isComparing, handleCompare }) {
   const { cases, recovered, deaths, todayCases, todayDeaths, casesPerOneMillion, deathsPerOneMillion, testsPerOneMillion } = data
   const [countries, setCountries] = useState([]);
+  
 
   
   
@@ -65,12 +66,20 @@ Testes por milhão: ${testsPerOneMillion}`
       <CardPanelContentStyled>
         <div>
           <Typography variant="h5" component="span" color="primary">COVID19</Typography>
-          <Typography variant="h6" component="span" color="primary">{' '}Painel Coronavírus</Typography>
-          <Typography variant="body2" component="span" color="primary">{' '}Atualizado em: {updateAt}</Typography>
+          <Typography variant="h6" component="span" color="primary">{' - '}Painel Coronavírus</Typography>
+          <Typography variant="body2" component="span" color="primary">{' - '}Atualizado em: {updateAt}</Typography>
           <div className="pt-2">
             <Select onChange={onChange} value={country}>
               {countries.map(renderCountries)}
             </Select>
+            <Button variant="contained" color="primary" onClick={handleCompare}>
+              Comparar
+            </Button>
+            {isComparing && 
+              <Select onChange={onChangeCompare} value={country2}>
+                {countries.map(renderCountries)}
+              </Select>
+            }
           </div>
         </div>
         {navigatorHasShare ? renderShareButton : renderCopyButton}

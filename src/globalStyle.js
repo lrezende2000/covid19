@@ -28,6 +28,8 @@ const globalStyle = createGlobalStyle`
   }
   .pt-2 {
     padding-top: 16px;
+    display: flex;
+    justify-content: space-between;
   }
   .cursor {
     cursor: pointer;
