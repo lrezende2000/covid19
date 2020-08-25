@@ -1,5 +1,5 @@
-import { createGlobalStyle } from 'styled-components'
-import CovidImg from './assets/images/covid.jpg'
+import { createGlobalStyle } from 'styled-components';
+// import CovidImg from './assets/images/covid-black-white.jpg';
 
 const globalStyle = createGlobalStyle`
   * {
@@ -8,6 +8,7 @@ const globalStyle = createGlobalStyle`
   }
   body {
     line-height: normal;
+    font-family: 'Roboto', sans-serif;
   }
   html, body {
     width: 100%;
@@ -17,10 +18,11 @@ const globalStyle = createGlobalStyle`
     margin: 0;
   }
   #root {
-    background: url(${CovidImg});
+    background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.5), rgba(0, 0, 111, .9)150%);
     height: 100%;
     width: 100%;
     background-size: cover;
+    background-color: grey;
     background-position: center center;
   }
   .mb-2 {
@@ -34,6 +36,6 @@ const globalStyle = createGlobalStyle`
   .cursor {
     cursor: pointer;
   }
-`
+`;
 
-export default globalStyle
+export default globalStyle;

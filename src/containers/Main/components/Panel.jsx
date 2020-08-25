@@ -1,20 +1,38 @@
-import React, { memo, useState, useEffect } from 'react'
-import { Card, Typography, Button, Select, MenuItem } from '../../../components'
-import { CardPanelContentStyled, ItemStyled } from './style'
+import React, { memo, useState, useEffect } from 'react';
+import {
+  Card, Typography, Button, Select, MenuItem,
+} from '../../../components';
+import { CardPanelContentStyled, ItemStyled } from './style';
 import Api from '../../../api';
 
-const navigatorHasShare = navigator.share
+const navigatorHasShare = navigator.share;
 
-function Panel({ updateAt, onChange, onChangeCompare, data, country, country2, isComparing, handleCompare }) {
-  const { cases, recovered, deaths, todayCases, todayDeaths, casesPerOneMillion, deathsPerOneMillion, testsPerOneMillion } = data
+function Panel({
+  updateAt,
+  onChange,
+  onChangeCompare,
+  data,
+  firstCountry,
+  secondCountry,
+  isComparing,
+  handleCompare,
+}) {
+  const {
+    cases,
+    recovered,
+    deaths,
+    todayCases,
+    todayDeaths,
+    casesPerOneMillion,
+    deathsPerOneMillion,
+    testsPerOneMillion,
+  } = data;
   const [countries, setCountries] = useState([]);
-  
 
-  
-  
-  useEffect(() => {    
-    Api.getAllCountriesName().then(data => setCountries(data))
-  }, [countries])
+  useEffect(() => {
+    Api.getAllCountriesName()
+      .then(setCountries);
+  }, [countries]);
 
   const renderCountries = (country, index) => (
     <MenuItem key={`country-${index}`} value={country}>
@@ -22,28 +40,28 @@ function Panel({ updateAt, onChange, onChangeCompare, data, country, country2, i
         <div>{country}</div>
       </ItemStyled>
     </MenuItem>
-  )
+  );
 
-  const textCovid19 = `País: ${country} - recuperados: ${recovered}
+  const textCovid19 = `País: ${firstCountry} - recuperados: ${recovered}
 Mortes: ${deaths}
 Mortes hoje: ${todayDeaths}
 Casos: ${cases}
 Casos hoje: ${todayCases}
 Casos por milhão: ${casesPerOneMillion}
 Mortes por milhão: ${deathsPerOneMillion}
-Testes por milhão: ${testsPerOneMillion}`
+Testes por milhão: ${testsPerOneMillion}`;
 
   const copyInfo = () => {
-    navigator.clipboard.writeText(textCovid19)
-  }
+    navigator.clipboard.writeText(textCovid19);
+  };
 
   const shareInfo = () => {
     navigator.share({
-      title: `Dados do Covid19 - ${country}`,
+      title: `Dados do Covid19 - ${firstCountry}`,
       text: textCovid19,
-      url: 'https://covid19dio.netlify.app/'
-    })
-  }
+      url: 'https://covid19dio.netlify.app/',
+    });
+  };
 
   const renderShareButton = (
     <div>
@@ -51,7 +69,7 @@ Testes por milhão: ${testsPerOneMillion}`
         Compartilhar
       </Button>
     </div>
-  )
+  );
 
   const renderCopyButton = (
     <div>
@@ -59,33 +77,42 @@ Testes por milhão: ${testsPerOneMillion}`
         Copiar
       </Button>
     </div>
-  )
+  );
 
   return (
     <Card>
       <CardPanelContentStyled>
         <div>
           <Typography variant="h5" component="span" color="primary">COVID19</Typography>
-          <Typography variant="h6" component="span" color="primary">{' - '}Painel Coronavírus</Typography>
-          <Typography variant="body2" component="span" color="primary">{' - '}Atualizado em: {updateAt}</Typography>
+          <Typography variant="h6" component="span" color="primary">
+            {' - '}
+            Painel Coronavírus
+          </Typography>
+          <Typography variant="body2" component="span" color="primary">
+            {' - '}
+            Atualizado em:
+            {' '}
+            {updateAt}
+          </Typography>
           <div className="pt-2">
-            <Select onChange={onChange} value={country}>
+            <Select onChange={onChange} value={firstCountry}>
               {countries.map(renderCountries)}
             </Select>
             <Button variant="contained" color="primary" onClick={handleCompare}>
               Comparar
             </Button>
-            {isComparing && 
-              <Select onChange={onChangeCompare} value={country2}>
+            {isComparing
+              && (
+              <Select onChange={onChangeCompare} value={secondCountry}>
                 {countries.map(renderCountries)}
               </Select>
-            }
+              )}
           </div>
         </div>
         {navigatorHasShare ? renderShareButton : renderCopyButton}
       </CardPanelContentStyled>
     </Card>
-  )
+  );
 }
 
-export default memo(Panel)
+export default memo(Panel);

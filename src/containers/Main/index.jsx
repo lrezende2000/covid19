@@ -1,61 +1,84 @@
-import React, { memo, useState, useCallback, useEffect } from 'react'
-import Api from '../../api'
-import Board from './components/Board'
-import Panel from './components/Panel'
-import { ContainerStyled } from './style'
+import React, {
+  memo, useState, useCallback, useEffect,
+} from 'react';
+import Api from '../../api';
+import Board from './components/Board';
+import Panel from './components/Panel';
+import ContainerStyled from './style';
+import { Loading } from '../../components';
 
 function Main() {
-  const [data, setData] = useState({});
-  const [data2, setData2] = useState({});
-  const [country, setCountry] = useState('World');
-  const [country2, setCountry2] = useState('World');
+  const [firstCountryInfo, setFirstCountryInfo] = useState({});
+  const [secondCountryInfo, setSecondCountryInfo] = useState({});
+  const [firstCountry, setFirstCountry] = useState('World');
+  const [secondCountry, setSecondCountry] = useState('Brazil');
   const [isComparing, setIsComparing] = useState(false);
-  let [date, month, year] = ( new Date() ).toLocaleDateString().split("/")
-  const updateAt = `${date}/${month}/${year}`
+  const [isLoading, setIsLoading] = useState(true);
+  const [date, month, year] = (new Date()).toLocaleDateString().split('/');
+  const updateAt = `${date}/${month}/${year}`;
 
-  const getCovidData = useCallback((country) => {
+  const getCovidCountryData = useCallback((country) => {
     Api.getCountry(country)
-      .then(data => setData(data))
-  }, [])
+      .then(setFirstCountryInfo);
+  }, []);
 
-  const getCovidData2 = useCallback((country) => {
+  const getCovidComparabledCountryData = useCallback((country) => {
     Api.getCountry(country)
-      .then(data => setData2(data))
-  }, [])
+      .then(setSecondCountryInfo);
+  }, []);
 
-  useEffect(() => {    
-    getCovidData(country);
-    getCovidData2(country2);
-  }, [getCovidData, getCovidData2, country, country2]);
+  useEffect(() => {
+    getCovidCountryData(firstCountry);
+    getCovidComparabledCountryData(secondCountry);
+    setInterval(() => setIsLoading(false), 3000);
+    console.log('passei por aqui');
+  }, [getCovidCountryData, firstCountry, getCovidComparabledCountryData, secondCountry, isLoading]);
 
-  const handleChange = ({ target }) => {
-    const country = target.value
-    setCountry(country)
-  }
+  const handleChangeCountry = ({ target }) => {
+    setFirstCountry(target.value);
+    setIsLoading(true);
+  };
 
-  const handleChangeCompareCountry = ({ target }) => {
-    const country2 = target.value
-    setCountry2(country2)
-  }
+  const handleChangeComparedCountry = ({ target }) => {
+    setSecondCountry(target.value);
+    setIsLoading(true);
+  };
 
   return (
     <ContainerStyled>
       <div className="mb-2">
         <Panel
-          data={data}
+          data={firstCountryInfo}
           updateAt={updateAt}
-          onChange={handleChange}
-          onChangeCompare={handleChangeCompareCountry}
-          country={country}
-          country2={country2}
+          onChange={handleChangeCountry}
+          onChangeCompare={handleChangeComparedCountry}
+          firstCountry={firstCountry}
+          secondCountry={secondCountry}
           isComparing={isComparing}
           handleCompare={() => setIsComparing(!isComparing)}
         />
       </div>
-      <Board data={data} isComparing={isComparing} data2={data2}/>
-      
+      {isLoading
+        ? (
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '100%',
+          }}
+          >
+            <Loading />
+          </div>
+        )
+        : (
+          <Board
+            firstCountryInfo={firstCountryInfo}
+            isComparing={isComparing}
+            secondCountryInfo={secondCountryInfo}
+          />
+        )}
     </ContainerStyled>
-  )
+  );
 }
 
-export default memo(Main)
+export default memo(Main);

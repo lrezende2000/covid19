@@ -1,3 +1,3 @@
-import MenuItem from '@material-ui/core/MenuItem'
+import MenuItem from '@material-ui/core/MenuItem';
 
-export default MenuItem
+export default MenuItem;

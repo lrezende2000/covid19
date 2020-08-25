@@ -1,3 +1,3 @@
-import Skeleton from '@material-ui/lab/Skeleton'
+import Skeleton from '@material-ui/lab/Skeleton';
 
-export default Skeleton
+export default Skeleton;

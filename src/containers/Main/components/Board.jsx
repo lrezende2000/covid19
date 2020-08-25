@@ -1,21 +1,26 @@
-import React, { memo } from 'react'
-import { Grid } from '../../../components'
-import BoardContent from './BoardContent'
+import React, { memo } from 'react';
+import { Grid } from '../../../components';
+import BoardContent from './BoardContent';
+import { Header, HeaderLabel, Divider } from './style';
 
-import { Divider } from './style'
-
-function Board({ data, isComparing, data2 }) {
+function Board({ firstCountryInfo, isComparing, secondCountryInfo }) {
   return (
-    <Grid container direction="row">
-      <BoardContent data={data} isComparing={isComparing} />
-      {isComparing && (
-        <>
-          <Divider />
-          <BoardContent data={data2} isComparing={isComparing} />
-        </>
-      )}
-    </Grid>
-  )
+    <>
+      <Header>
+        <HeaderLabel>{firstCountryInfo.country}</HeaderLabel>
+        <HeaderLabel>{isComparing && secondCountryInfo.country}</HeaderLabel>
+      </Header>
+      <Grid container direction="row">
+        <BoardContent data={firstCountryInfo} isComparing={isComparing} />
+        {isComparing && (
+          <>
+            <Divider />
+            <BoardContent data={secondCountryInfo} isComparing={isComparing} />
+          </>
+        )}
+      </Grid>
+    </>
+  );
 }
 
-export default memo(Board)
+export default memo(Board);
