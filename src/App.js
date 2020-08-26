@@ -2,14 +2,14 @@ import React from 'react';
 import { StylesProvider } from '@material-ui/styles';
 import { CssBaseline } from '@material-ui/core';
 import GlobalStyle from './globalStyle';
-import Main from './containers/Main';
+import Routes from './routes';
 
 function App() {
   return (
     <StylesProvider injectFirst>
       <CssBaseline />
       <GlobalStyle />
-      <Main />
+      <Routes />
     </StylesProvider>
   );
 }
