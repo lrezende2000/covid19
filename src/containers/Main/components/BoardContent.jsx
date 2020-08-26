@@ -6,7 +6,8 @@ function BoardContent({ data, isComparing }) {
   const {
     cases,
     todayDeaths,
-    recovered, deaths,
+    recovered,
+    deaths,
     todayCases,
     casesPerOneMillion,
     deathsPerOneMillion,

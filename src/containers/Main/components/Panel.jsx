@@ -1,8 +1,11 @@
 import React, { memo, useState, useEffect } from 'react';
 import {
-  Card, Typography, Button, Select, MenuItem,
+  Card,
+  Typography,
+  Select,
+  MenuItem,
 } from '../../../components';
-import { CardPanelContentStyled, ItemStyled } from './style';
+import { CardPanelContentStyled, ItemStyled, ButtonStyled } from './style';
 import Api from '../../../api';
 
 const navigatorHasShare = navigator.share;
@@ -10,23 +13,14 @@ const navigatorHasShare = navigator.share;
 function Panel({
   updateAt,
   onChange,
-  onChangeCompare,
-  data,
+  onChangeCompareCountry,
   firstCountry,
+  firstCountryInfo,
   secondCountry,
+  secondCountryInfo,
   isComparing,
   handleCompare,
 }) {
-  const {
-    cases,
-    recovered,
-    deaths,
-    todayCases,
-    todayDeaths,
-    casesPerOneMillion,
-    deathsPerOneMillion,
-    testsPerOneMillion,
-  } = data;
   const [countries, setCountries] = useState([]);
 
   useEffect(() => {
@@ -42,14 +36,42 @@ function Panel({
     </MenuItem>
   );
 
-  const textCovid19 = `País: ${firstCountry} - recuperados: ${recovered}
-Mortes: ${deaths}
-Mortes hoje: ${todayDeaths}
-Casos: ${cases}
-Casos hoje: ${todayCases}
-Casos por milhão: ${casesPerOneMillion}
-Mortes por milhão: ${deathsPerOneMillion}
-Testes por milhão: ${testsPerOneMillion}`;
+  const noComparingCountryText = `País: ${firstCountryInfo.country} - recuperados: ${firstCountryInfo.recovered}
+Mortes: ${firstCountryInfo.deaths}
+Mortes hoje: ${firstCountryInfo.todayDeaths}
+Casos: ${firstCountryInfo.cases}
+Casos hoje: ${firstCountryInfo.todayCases}
+Casos por milhão: ${firstCountryInfo.casesPerOneMillion}
+Mortes por milhão: ${firstCountryInfo.deathsPerOneMillion}
+Testes por milhão: ${firstCountryInfo.testsPerOneMillion}`;
+
+  const isComparingCountriesText = `Países: ${firstCountryInfo.country} e ${secondCountryInfo.country}
+  Recuperados:
+${firstCountryInfo.country} - ${firstCountryInfo.recovered}
+${secondCountryInfo.country} - ${secondCountryInfo.recovered}
+  Mortes:
+${firstCountryInfo.country} - ${firstCountryInfo.deaths}
+${secondCountryInfo.country} - ${secondCountryInfo.deaths}
+  Mortes hoje:
+${firstCountryInfo.country} - ${firstCountryInfo.todayDeaths}
+${secondCountryInfo.country} - ${secondCountryInfo.todayDeaths}
+  Casos:
+${firstCountryInfo.country} - ${firstCountryInfo.cases}
+${secondCountryInfo.country} - ${secondCountryInfo.cases}
+  Casos hoje:
+${firstCountryInfo.country} - ${firstCountryInfo.todayCases}
+${secondCountryInfo.country} - ${secondCountryInfo.todayCases}
+  Casos por milhão:
+${firstCountryInfo.country} - ${firstCountryInfo.casesPerOneMillion}
+${secondCountryInfo.country} - ${secondCountryInfo.casesPerOneMillion}
+  Mortes por milhão:
+${firstCountryInfo.country} - ${firstCountryInfo.deathsPerOneMillion}
+${secondCountryInfo.country} - ${secondCountryInfo.deathsPerOneMillion}
+  Testes por milhão:
+${firstCountryInfo.country} - ${firstCountryInfo.testsPerOneMillion}
+${secondCountryInfo.country} - ${secondCountryInfo.testsPerOneMillion}`;
+
+  const textCovid19 = isComparing ? isComparingCountriesText : noComparingCountryText;
 
   const copyInfo = () => {
     navigator.clipboard.writeText(textCovid19);
@@ -65,17 +87,17 @@ Testes por milhão: ${testsPerOneMillion}`;
 
   const renderShareButton = (
     <div>
-      <Button variant="contained" color="primary" onClick={shareInfo}>
+      <ButtonStyled variant="contained" color="primary" onClick={shareInfo}>
         Compartilhar
-      </Button>
+      </ButtonStyled>
     </div>
   );
 
   const renderCopyButton = (
     <div>
-      <Button variant="contained" color="primary" onClick={copyInfo}>
+      <ButtonStyled variant="contained" color="primary" onClick={copyInfo}>
         Copiar
-      </Button>
+      </ButtonStyled>
     </div>
   );
 
@@ -98,18 +120,18 @@ Testes por milhão: ${testsPerOneMillion}`;
             <Select onChange={onChange} value={firstCountry}>
               {countries.map(renderCountries)}
             </Select>
-            <Button variant="contained" color="primary" onClick={handleCompare}>
+            <ButtonStyled variant="contained" color="primary" onClick={handleCompare}>
               Comparar
-            </Button>
+            </ButtonStyled>
             {isComparing
               && (
-              <Select onChange={onChangeCompare} value={secondCountry}>
+              <Select onChange={onChangeCompareCountry} value={secondCountry}>
                 {countries.map(renderCountries)}
               </Select>
               )}
+            {navigatorHasShare ? renderShareButton : renderCopyButton}
           </div>
         </div>
-        {navigatorHasShare ? renderShareButton : renderCopyButton}
       </CardPanelContentStyled>
     </Card>
   );

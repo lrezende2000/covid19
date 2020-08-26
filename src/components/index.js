@@ -6,6 +6,7 @@ import Skeleton from './Skeleton';
 import Select from './Select';
 import MenuItem from './MenuItem';
 import Loading from './Loading';
+import NavBar from './NavBar';
 
 export {
   Button,
@@ -17,4 +18,5 @@ export {
   Select,
   MenuItem,
   Loading,
+  NavBar,
 };

@@ -6,11 +6,11 @@ import { Header, HeaderLabel, Divider } from './style';
 function Board({ firstCountryInfo, isComparing, secondCountryInfo }) {
   return (
     <>
-      <Header>
+      <Header isComparing={isComparing}>
         <HeaderLabel>{firstCountryInfo.country}</HeaderLabel>
         <HeaderLabel>{isComparing && secondCountryInfo.country}</HeaderLabel>
       </Header>
-      <Grid container direction="row">
+      <Grid container direction="row" style={{ justifyContent: 'center' }}>
         <BoardContent data={firstCountryInfo} isComparing={isComparing} />
         {isComparing && (
           <>

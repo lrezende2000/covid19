@@ -1,11 +1,14 @@
 import React, {
-  memo, useState, useCallback, useEffect,
+  memo,
+  useState,
+  useCallback,
+  useEffect,
 } from 'react';
 import Api from '../../api';
 import Board from './components/Board';
 import Panel from './components/Panel';
 import ContainerStyled from './style';
-import { Loading } from '../../components';
+import { Loading, NavBar } from '../../components';
 
 function Main() {
   const [firstCountryInfo, setFirstCountryInfo] = useState({});
@@ -31,7 +34,6 @@ function Main() {
     getCovidCountryData(firstCountry);
     getCovidComparabledCountryData(secondCountry);
     setInterval(() => setIsLoading(false), 3000);
-    console.log('passei por aqui');
   }, [getCovidCountryData, firstCountry, getCovidComparabledCountryData, secondCountry, isLoading]);
 
   const handleChangeCountry = ({ target }) => {
@@ -46,14 +48,16 @@ function Main() {
 
   return (
     <ContainerStyled>
+      <NavBar />
       <div className="mb-2">
         <Panel
-          data={firstCountryInfo}
           updateAt={updateAt}
           onChange={handleChangeCountry}
-          onChangeCompare={handleChangeComparedCountry}
+          onChangeCompareCountry={handleChangeComparedCountry}
           firstCountry={firstCountry}
+          firstCountryInfo={firstCountryInfo}
           secondCountry={secondCountry}
+          secondCountryInfo={secondCountryInfo}
           isComparing={isComparing}
           handleCompare={() => setIsComparing(!isComparing)}
         />

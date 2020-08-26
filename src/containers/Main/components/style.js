@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { CardContent, Typography } from '../../../components';
+import { CardContent, Typography, Button } from '../../../components';
 
 export const LabelStyled = styled(Typography)`
   font-weight: 500;
@@ -13,13 +13,21 @@ export const ValueStyled = styled(Typography)`
 
 export const CardContentStyled = styled(CardContent)`
   border-left: 8px solid ${({ color }) => color || '#5d78ff'};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const CardPanelContentStyled = styled(CardContent)`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 25px;
+`;
+
+export const ButtonStyled = styled(Button)`
+  margin: 0 15px;
 `;
 
 export const ItemStyled = styled.div`
@@ -30,12 +38,15 @@ export const ItemStyled = styled.div`
 
 export const Header = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: ${({ isComparing }) => (isComparing ? 'space-around' : 'center')};
   align-items: center;
+  background: white;
+  border-radius: 4px;
+  margin: 0 0 20px 0;
 `;
 
 export const HeaderLabel = styled.h1`
-  border-radius: 8px;
+  text-align: center;
 `;
 
 export const Divider = styled.div`
