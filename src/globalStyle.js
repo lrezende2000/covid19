@@ -32,9 +32,24 @@ const globalStyle = createGlobalStyle`
     padding-top: 16px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
   .cursor {
     cursor: pointer;
+  }
+
+  @media(max-width: 700px) {
+    .pt-2 {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  @media(max-width: 500px) {
+    .card-value {
+      font-size: 1.7rem;
+    }
   }
 `;
 

@@ -11,7 +11,7 @@ function Card({ value, label, color }) {
   return (
     <CardUI>
       <CardContentStyled color={color}>
-        <ValueStyled>{value}</ValueStyled>
+        <ValueStyled className="card-value">{value}</ValueStyled>
         <LabelStyled>{label}</LabelStyled>
       </CardContentStyled>
     </CardUI>

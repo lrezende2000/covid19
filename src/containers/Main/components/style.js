@@ -24,10 +24,11 @@ export const CardPanelContentStyled = styled(CardContent)`
   justify-content: center;
   align-items: center;
   padding: 25px;
+  text-align: center;
 `;
 
 export const ButtonStyled = styled(Button)`
-  margin: 0 15px;
+  margin: 10px 15px;
 `;
 
 export const ItemStyled = styled.div`
